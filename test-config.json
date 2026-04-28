@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "name": "Tela Hub",
+  "status": "Remote JSON config is working",
+  "autonomy": "Still dormant",
+  "progress": 91,
+  "sourceMode": "public-json-test",
+  "lastUpdated": "2026-04-28",
+  "repo": {
+    "name": "tela-dashboard",
+    "status": "deployed",
+    "url": "https://github.com/proxsyi/tela-dashboard",
+    "pagesUrl": "https://proxsyi.github.io/tela-dashboard/"
+  },
+  "needsCash": [
+    {
+      "title": "JSON config test passed",
+      "status": "Done",
+      "tone": "green"
+    }
+  ],
+  "cards": [
+    {
+      "label": "Config",
+      "value": "Remote",
+      "detail": "Loaded from JSON URL",
+      "tone": "green"
+    },
+    {
+      "label": "Progress",
+      "value": "91%",
+      "detail": "Test override worked",
+      "tone": "purple"
+    }
+  ],
+  "sections": [
+    {
+      "title": "Remote Config Test",
+      "body": "If you can see this, the config loader works."
+    }
+  ]
+}
