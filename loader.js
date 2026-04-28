@@ -246,28 +246,56 @@
     if (dashboard) dashboard.classList.remove('hidden');
   }
 
+  // ── Load config.json from same origin ───────────────────────
+  async function loadLocalConfig() {
+    try {
+      const res = await fetch('./config.json');
+      if (!res.ok) {
+        console.log('[Tela] config.json not found (HTTP', res.status, ')');
+        return null;
+      }
+      const obj = await res.json();
+      if (obj && typeof obj === 'object') {
+        console.log('[Tela] Loaded config.json from repo.');
+        return obj;
+      }
+      return null;
+    } catch (err) {
+      // Expected when serving from file:// or config.json absent
+      console.log('[Tela] config.json not available:', err.message);
+      return null;
+    }
+  }
+
   // ── Boot ────────────────────────────────────────────────────
   async function boot() {
-    if (!window.TelaSource) {
-      console.warn('[Tela] notion-source.js not loaded — using fallback config');
-      render(FALLBACK_CONFIG, false);
-      return;
-    }
-
+    // Priority 1: ?config= or ?notionSource= query params
     let remote = null;
-    try {
-      remote = await window.TelaSource.loadRemoteConfig();
-    } catch (err) {
-      console.warn('[Tela] Remote config load threw unexpectedly:', err.message);
+    if (window.TelaSource) {
+      try {
+        remote = await window.TelaSource.loadRemoteConfig();
+      } catch (err) {
+        console.warn('[Tela] Remote config load threw unexpectedly:', err.message);
+      }
     }
 
     if (remote && typeof remote === 'object') {
-      console.log('[Tela] Using remote config.');
+      console.log('[Tela] Using remote config (query param).');
       render(remote, true);
-    } else {
-      console.log('[Tela] Using fallback config.');
-      render(FALLBACK_CONFIG, false);
+      return;
     }
+
+    // Priority 2: ./config.json (synced from Notion via sync script)
+    const local = await loadLocalConfig();
+    if (local && typeof local === 'object') {
+      console.log('[Tela] Using config.json.');
+      render(local, true);
+      return;
+    }
+
+    // Priority 3: bundled fallback config
+    console.log('[Tela] Using bundled fallback config.');
+    render(FALLBACK_CONFIG, false);
   }
 
   if (document.readyState === 'loading') {

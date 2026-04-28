@@ -6,13 +6,57 @@ No build step. No backend. No secrets. Pure HTML/CSS/JS.
 
 ---
 
+## Architecture
+
+```
+Notion public page  →  sync script (Air)  →  repo files  →  git push  →  GitHub Pages  →  Tela Hub embed
+```
+
+**Notion is the source of truth** for dashboard config (and optionally other files).  
+A sync script runs locally on Cash's MacBook Air, fetches the public Notion page server-side,
+extracts code blocks, and pushes changes to GitHub.  
+The browser reads `config.json` from GitHub Pages — no Notion token, no CORS issues.
+
+### Config priority (in the browser)
+
+1. `?config=<url>` query param — override with any public JSON URL
+2. `./config.json` — synced from Notion by the sync script (**default path**)
+3. Bundled fallback config in `loader.js` — used if config.json is absent
+
+---
+
+## Sync script
+
+See [`scripts/README.md`](scripts/README.md) for full documentation.
+
+**Quick start:**
+
+```bash
+# Dry run — see what would change
+python3 scripts/sync_from_notion.py --dry-run --verbose
+
+# Write config.json (no git)
+python3 scripts/sync_from_notion.py --no-git
+
+# Write, commit, and push
+python3 scripts/sync_from_notion.py --push
+```
+
+The sync script fetches:
+```
+https://cashmouzon.notion.site/tela-dashboard
+```
+
+---
+
 ## Local test
 
 ```bash
-python3 -m http.server 4173
+python3 -m http.server 4174
 ```
 
-Then open: http://localhost:4173
+Open: http://localhost:4174  
+The dashboard should load `config.json` and show "Notion source config is working."
 
 ---
 
@@ -41,8 +85,9 @@ gh api \
   --method POST \
   -H "Accept: application/vnd.github+json" \
   /repos/proxsyi/tela-dashboard/pages \
-  -f source.branch=main \
-  -f source.path=/
+  --input - <<'EOF'
+{"source":{"branch":"main","path":"/"}}
+EOF
 ```
 
 If Pages already exists (update):
@@ -64,30 +109,6 @@ gh api /repos/proxsyi/tela-dashboard/pages --jq .html_url
 
 ---
 
-## Passing a public JSON config URL
-
-Append `?config=<url>` to the dashboard URL:
-
-```
-https://proxsyi.github.io/tela-dashboard/?config=https://example.com/tela-config.json
-```
-
-The JSON must be a public CORS-accessible URL that returns a config object matching the schema in `loader.js`.
-
----
-
-## Passing a public Notion source URL
-
-Append `?notionSource=<url>` to the dashboard URL:
-
-```
-https://proxsyi.github.io/tela-dashboard/?notionSource=https://www.notion.so/your-public-page
-```
-
-The dashboard will attempt to fetch the page and extract the first JSON config block. Direct Notion fetches are often CORS-blocked — if so, export or mirror the config as a plain JSON file instead.
-
----
-
 ## Embedding in Notion
 
 In a Notion page, use `/embed` and paste the GitHub Pages URL:
@@ -96,7 +117,30 @@ In a Notion page, use `/embed` and paste the GitHub Pages URL:
 https://proxsyi.github.io/tela-dashboard/
 ```
 
-Set the embed height to your preference (600–900px recommended).
+Set the embed height to 700–900px.
+
+---
+
+## Passing a public JSON config URL (override)
+
+Append `?config=<url>` to override config from any public JSON source:
+
+```
+https://proxsyi.github.io/tela-dashboard/?config=https://example.com/tela-config.json
+```
+
+---
+
+## ?notionSource= (experimental, usually CORS-blocked)
+
+The browser can try to fetch a Notion page directly:
+
+```
+https://proxsyi.github.io/tela-dashboard/?notionSource=https://cashmouzon.notion.site/tela-dashboard
+```
+
+This is blocked by CORS in most browsers. Use the sync script instead.  
+`?notionSource=` remains supported in the code for testing and future use.
 
 ---
 
@@ -111,17 +155,8 @@ Set the embed height to your preference (600–900px recommended).
 
 ---
 
-## Manual steps remaining
-
-1. **Publish the public-safe Notion source page** — review the config content, then make the Notion page public before passing its URL as `?notionSource=`.
-2. **Test whether direct Notion fetch works** — Notion often blocks CORS. If blocked, host the config JSON at a public URL instead.
-3. **If CORS blocks Notion fetch** — use a public static JSON URL (`?config=`), or set up a tiny public proxy later.
-4. **Paste the GitHub Pages URL into Tela Hub** — add the embed block on the Tela Hub Notion page.
-5. **Report back to Notion project page** — paste the repo URL and Pages URL so the project record is up to date.
-
----
-
 ## URLs
 
 - Repo: https://github.com/proxsyi/tela-dashboard
 - Pages: https://proxsyi.github.io/tela-dashboard/
+- Notion source: https://cashmouzon.notion.site/tela-dashboard

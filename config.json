@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "name": "Tela Hub",
+  "status": "Notion source config is working",
+  "autonomy": "Dormant until Phase 2",
+  "progress": 86,
+  "currentTask": "Verify the dashboard can read public-safe config from Notion.",
+  "sourceMode": "notion-public-config",
+  "lastUpdated": "2026-04-28",
+  "repo": {
+    "name": "tela-dashboard",
+    "status": "deployed",
+    "url": "https://github.com/proxsyi/tela-dashboard",
+    "pagesUrl": "https://proxsyi.github.io/tela-dashboard/"
+  },
+  "needsCash": [
+    {
+      "title": "Confirm whether Notion source mode loads as remote config",
+      "status": "Testing",
+      "tone": "yellow"
+    },
+    {
+      "title": "If Notion fetch is blocked, use public JSON config mode",
+      "status": "Fallback ready",
+      "tone": "purple"
+    }
+  ],
+  "cards": [
+    {
+      "label": "System",
+      "value": "Operational",
+      "detail": "GitHub Pages dashboard is live",
+      "tone": "green"
+    },
+    {
+      "label": "Config",
+      "value": "Notion",
+      "detail": "Testing public page extraction",
+      "tone": "blue"
+    },
+    {
+      "label": "Progress",
+      "value": "86%",
+      "detail": "Dashboard deployed; source test in progress",
+      "tone": "purple"
+    },
+    {
+      "label": "Cost",
+      "value": "$0.00",
+      "detail": "Static GitHub Pages hosting",
+      "tone": "gray"
+    }
+  ],
+  "sections": [
+    {
+      "title": "Current Work",
+      "body": "Test whether the GitHub Pages dashboard can extract this JSON config from the public Notion source page."
+    },
+    {
+      "title": "Next Step",
+      "body": "Open the dashboard with the notionSource query param and check whether the badge changes from fallback config to remote config."
+    },
+    {
+      "title": "Backend State",
+      "body": "No secrets, tokens, private machine details, protected endpoint URLs, or real controls are included in this public config."
+    }
+  ]
+}
