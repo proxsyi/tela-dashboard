@@ -3,7 +3,7 @@
   "name": "Tela Hub",
   "status": "Notion source config is working",
   "autonomy": "Dormant until Phase 2",
-  "progress": 86,
+  "progress": 88,
   "currentTask": "Verify the dashboard can read public-safe config from Notion.",
   "sourceMode": "notion-public-config",
   "lastUpdated": "2026-04-28",
