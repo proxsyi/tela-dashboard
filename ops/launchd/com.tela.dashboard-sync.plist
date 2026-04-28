@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-	<dict>
-		<key>Label</key>
-		<string>com.tela.dashboard-sync</string>
+<dict>
+	<key>Label</key>
+	<string>com.tela.dashboard-sync</string>
 
-		<key>ProgramArguments</key>
-		<array>
-			<string>/bin/zsh</string>
-			<string>-lc</string>
-			<string>cd "$HOME/Documents/Projects/Personal/tela-dashboard" && /usr/bin/python3 scripts/sync_from_notion.py --push</string>
-		</array>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/zsh</string>
+		<string>-lc</string>
+		<string>cd "$HOME/Documents/Projects/Personal/tela-dashboard" &amp;&amp; /usr/bin/python3 scripts/sync_from_notion.py --push</string>
+	</array>
 
-		<key>StartInterval</key>
-		<integer>300</integer>
+	<key>WorkingDirectory</key>
+	<string>/Users/cashm/Documents/Projects/Personal/tela-dashboard</string>
 
-		<key>RunAtLoad</key>
-		<true/>
+	<key>StartInterval</key>
+	<integer>10</integer>
 
-		<key>StandardOutPath</key>
-		<string>/Users/cashm/Documents/Projects/Personal/tela-dashboard/logs/sync.out.log</string>
+	<key>RunAtLoad</key>
+	<true/>
 
-		<key>StandardErrorPath</key>
-		<string>/Users/cashm/Documents/Projects/Personal/tela-dashboard/logs/sync.err.log</string>
-	</dict>
+	<key>StandardOutPath</key>
+	<string>/Users/cashm/Documents/Projects/Personal/tela-dashboard/logs/sync.out.log</string>
+
+	<key>StandardErrorPath</key>
+	<string>/Users/cashm/Documents/Projects/Personal/tela-dashboard/logs/sync.err.log</string>
+</dict>
 </plist>
