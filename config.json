@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "name": "Tela Hub",
-  "status": "Notion source config is working",
+  "status": "Dashboard v1 is live",
   "autonomy": "Dormant until Phase 2",
-  "progress": 88,
-  "currentTask": "Verify the dashboard can read public-safe config from Notion.",
-  "sourceMode": "notion-public-config",
+  "progress": 86,
+  "currentTask": "Tela Hub dashboard is live and syncing from Notion.",
+  "sourceMode": "notion-sync-generated",
   "lastUpdated": "2026-04-28",
   "repo": {
     "name": "tela-dashboard",
@@ -15,14 +15,14 @@
   },
   "needsCash": [
     {
-      "title": "Confirm whether Notion source mode loads as remote config",
-      "status": "Testing",
-      "tone": "yellow"
+      "title": "Dashboard v1 is live and syncing",
+      "status": "Done",
+      "tone": "green"
     },
     {
-      "title": "If Notion fetch is blocked, use public JSON config mode",
-      "status": "Fallback ready",
-      "tone": "purple"
+      "title": "Use this Notion source page to update dashboard config",
+      "status": "Active",
+      "tone": "blue"
     }
   ],
   "cards": [
@@ -35,18 +35,18 @@
     {
       "label": "Config",
       "value": "Notion",
-      "detail": "Testing public page extraction",
+      "detail": "Synced by the Air every 10 seconds",
       "tone": "blue"
     },
     {
       "label": "Progress",
-      "value": "88%",
-      "detail": "Dashboard deployed; source test in progress",
+      "value": "86%",
+      "detail": "Dashboard v1 complete; Phase 2 remains separate",
       "tone": "purple"
     },
     {
       "label": "Cost",
-      "value": "$24.00",
+      "value": "$0.00",
       "detail": "Static GitHub Pages hosting",
       "tone": "gray"
     }
@@ -54,15 +54,15 @@
   "sections": [
     {
       "title": "Current Work",
-      "body": "Test whether the GitHub Pages dashboard can extract this JSON config from the public Notion source page."
+      "body": "Dashboard v1 is live, embedded in Tela Hub, and syncing from the public-safe Notion source page."
     },
     {
       "title": "Next Step",
-      "body": "Open the dashboard with the notionSource query param and check whether the badge changes from fallback config to remote config."
+      "body": "Maintain dashboard text and status by editing this JSON block; the Air sync job publishes changes automatically."
     },
     {
       "title": "Backend State",
-      "body": "No secrets, tokens, private machine details, protected endpoint URLs, or real controls are included in this public config."
+      "body": "The sync job runs on the Air every 10 seconds, writes config.json when changed, and pushes to GitHub Pages. No secrets, tokens, private machine details, protected endpoints, or real controls are included."
     }
   ]
 }
